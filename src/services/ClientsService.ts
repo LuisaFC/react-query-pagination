@@ -13,7 +13,12 @@ interface IClient {
 
 export class ClientsService {
   static async getAll() {
-    const { data } = await httpClient.get<IClient[]>('/clients');
+    const { data } = await httpClient.get<IClient[]>('/clients', {
+      params: {
+        _page: 1,
+        _per_page: 20,
+      },
+    });
 
     return data;
   }
