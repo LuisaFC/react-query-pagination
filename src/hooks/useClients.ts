@@ -4,11 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 export function useClients() {
   const { data, isLoading } = useQuery({
     queryKey: ['clients'],
-    queryFn: ClientsService.getAll,
+    queryFn: () => ClientsService.getAll(),
   });
 
   return {
-    clients: data ?? [],
+    clients: data?.data ?? [],
     isLoading,
   };
 }
