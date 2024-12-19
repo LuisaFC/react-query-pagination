@@ -19,7 +19,7 @@ import {
 import { useClients } from '@/hooks/useClients';
 
 export function Clients() {
-  const { clients, isLoading } = useClients();
+  const { clients, isLoading, pagination } = useClients();
 
 
   return (
@@ -88,7 +88,9 @@ export function Clients() {
             <Pagination>
               <PaginationContent>
                 <PaginationItem>
-                  <PaginationPrevious />
+                  <PaginationPrevious
+                    onClick={pagination.handlePreviousPage}
+                  />
                 </PaginationItem>
 
                 <PaginationItem>
@@ -104,7 +106,7 @@ export function Clients() {
                 </PaginationItem>
 
                 <PaginationItem>
-                  <PaginationNext />
+                  <PaginationNext onClick={pagination.handleNextPage}/>
                 </PaginationItem>
 
               </PaginationContent>
