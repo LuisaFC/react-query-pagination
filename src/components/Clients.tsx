@@ -4,7 +4,7 @@ import {
   PaginationContent,
   PaginationItem,
   PaginationNext,
-  PaginationPrevious
+  PaginationPrevious,
 } from '@/components/ui/Pagination';
 import { Skeleton } from '@/components/ui/Skeleton';
 import {
@@ -20,7 +20,6 @@ import { useClients } from '@/hooks/useClients';
 
 export function Clients() {
   const { clients, isLoading, pagination } = useClients();
-
 
   return (
     <div>
@@ -55,31 +54,29 @@ export function Clients() {
           </TableHeader>
 
           <TableBody>
-            {clients.map(client => (
+            {clients.map((client) => (
               <TableRow key={client.id}>
                 <TableCell className="flex items-center gap-2">
-                  <img src={client.avatar} alt={client.name} className="w-10 h-10 rounded-full" />
+                  <img
+                    src={client.avatar}
+                    alt={client.name}
+                    className="w-10 h-10 rounded-full"
+                  />
                   <div>
                     <strong>{client.name}</strong>
-                    <small className="text-muted-foreground block">{client.email}</small>
+                    <small className="text-muted-foreground block">
+                      {client.email}
+                    </small>
                   </div>
                 </TableCell>
 
-                <TableCell>
-                  {client.createdAt}
-                </TableCell>
+                <TableCell>{client.createdAt}</TableCell>
 
-                <TableCell>
-                  {client.vehicleType}
-                </TableCell>
+                <TableCell>{client.vehicleType}</TableCell>
 
-                <TableCell>
-                  {client.vehicleManufacturer}
-                </TableCell>
+                <TableCell>{client.vehicleManufacturer}</TableCell>
 
-                <TableCell>
-                  {client.vehicleModel}
-                </TableCell>
+                <TableCell>{client.vehicleModel}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -90,25 +87,27 @@ export function Clients() {
                 <PaginationItem>
                   <PaginationPrevious
                     onClick={pagination.handlePreviousPage}
+                    disabled={!pagination.hasPreviousPage}
                   />
                 </PaginationItem>
 
-                <PaginationItem>
-                  <PaginationButton isActive>
-                    1
-                  </PaginationButton>
-                </PaginationItem>
+                {Array.from({ length: pagination.totalPages }, (_, index) => (
+                  <PaginationItem key={index}>
+                    <PaginationButton
+                      isActive={pagination.currentPage === (index + 1)}
+                      onClick={() => pagination.handleSetPage(index+1)}
+                    >
+                      {index+1}
+                    </PaginationButton>
+                  </PaginationItem>
+                ))}
 
                 <PaginationItem>
-                  <PaginationButton>
-                    2
-                  </PaginationButton>
+                  <PaginationNext
+                    onClick={pagination.handleNextPage}
+                    disabled={!pagination.hasNextPage}
+                  />
                 </PaginationItem>
-
-                <PaginationItem>
-                  <PaginationNext onClick={pagination.handleNextPage}/>
-                </PaginationItem>
-
               </PaginationContent>
             </Pagination>
           </TableCaption>

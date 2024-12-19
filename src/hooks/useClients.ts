@@ -10,6 +10,11 @@ export function useClients(perPage = 20) {
     queryFn: () => ClientsService.getAll(currentPage, perPage),
   });
 
+  const totalItem = data?.items ?? 0;
+  const totalPages = Math.ceil(totalItem / perPage);
+  const hasPreviousPage = currentPage > 1;
+  const hasNextPage = currentPage < totalPages;
+
   function handleNextPage() {
     setCurrentPage(prevState => prevState + 1);
   }
@@ -18,12 +23,21 @@ export function useClients(perPage = 20) {
     setCurrentPage(prevState => prevState - 1);
   }
 
+  function handleSetPage(page: number) {
+    setCurrentPage(page);
+  }
+
   return {
     clients: data?.data ?? [],
     isLoading,
     pagination: {
       handleNextPage,
-      handlePreviousPage
+      handlePreviousPage,
+      handleSetPage,
+      totalPages,
+      currentPage,
+      hasPreviousPage,
+      hasNextPage,
     }
   };
 }
