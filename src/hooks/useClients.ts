@@ -6,7 +6,7 @@ export function useClients(perPage = 20) {
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['clients'],
+    queryKey: ['clients', currentPage],
     queryFn: () => ClientsService.getAll(currentPage, perPage),
   });
 
