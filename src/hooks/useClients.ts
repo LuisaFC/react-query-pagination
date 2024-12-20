@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { usePagiantion } from './usePagination';
 import { useEffect } from 'react';
 
-export function useClients(perPage = 20) {
+export function useClients(perPage = 10) {
   const pagination = usePagiantion(perPage);
 
   const queryClient = useQueryClient();

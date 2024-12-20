@@ -4,3 +4,39 @@ import { twMerge } from 'tailwind-merge';
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
+
+export function generateEllipsisPagination(
+  currentPage: number,
+  totalPages: number,
+  surroundingPages = 2,
+) {
+
+  const pages: (number | string)[] = [];
+
+  for(let i = 1; i <= totalPages; i++) {
+
+    const isFirtsPage = i === 1;
+    const isLastPage = i === totalPages;
+    const isWithinLowerBound = i >= (currentPage - surroundingPages);
+    const isWithinUpperBound = i <= (currentPage + surroundingPages);
+
+    const isEllipsisPosition = (
+      i === currentPage - surroundingPages - 1 ||
+      i === currentPage + surroundingPages + 1
+    );
+
+    if(isEllipsisPosition && !isFirtsPage && !isLastPage) {
+      pages.push('...');
+      continue;
+    }
+
+    if((isFirtsPage || isLastPage) || (isWithinLowerBound && isWithinUpperBound)) {
+      pages.push(i);
+    }
+
+
+
+  }
+
+  return pages;
+}
